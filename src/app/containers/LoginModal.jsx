@@ -2,6 +2,7 @@ import React, { memo, useState } from 'react'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { Button, TextField, makeStyles, Typography } from '@material-ui/core'
+import AliveLogoDark from '../../assets/icons/AliveLogoDark'
 
 import AliveModal from '../components/AliveModal'
 
@@ -18,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
   },
   signInButton: {
     marginTop: theme.spacing(2),
+    backgroundColor: theme.palette.primary.text,
   },
   forgotPasswordLink: {
     margin: '20px 0px 30px',
@@ -47,7 +49,7 @@ const LoginModal = () => {
       <Button color="primary" onClick={handleOpen}>
         Sign In
       </Button>
-      <AliveModal open={open} onClose={handleClose} title="Login">
+      <AliveModal open={open} onClose={handleClose} title={<AliveLogoDark />}>
         <form className={classes.root} noValidate autoComplete="off" color="theme.palette.primary.text">
           <TextField id="username-input" label="Username" variant="filled" fullWidth />
           <TextField id="password-input" label="Password" type="password" variant="filled" fullWidth />

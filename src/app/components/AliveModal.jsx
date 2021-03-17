@@ -26,9 +26,11 @@ const useStyles = makeStyles((theme) => ({
     color: 'black',
   },
   modalTitle: {
+    display: 'flex',
     fontSize: 20,
     marginBottom: 10,
     color: theme.palette.primary.text,
+    justifyContent: 'center',
   },
   backdrop: {
     background: '#212121BF 0% 0% no-repeat padding-box',
@@ -65,7 +67,7 @@ const AliveModal = ({ className, open, title, onClose, children }) => {
 AliveModal.propTypes = {
   className: PropTypes.string,
   open: PropTypes.bool,
-  title: PropTypes.string,
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   onClose: PropTypes.func,
   children: PropTypes.oneOfType([
     PropTypes.node,
