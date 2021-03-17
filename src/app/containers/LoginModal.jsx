@@ -47,7 +47,7 @@ const LoginModal = () => {
       <Button color="primary" onClick={handleOpen}>
         Sign In
       </Button>
-      <AliveModal open={open} onClose={handleClose} title="Get started">
+      <AliveModal open={open} onClose={handleClose} title="Login">
         <form className={classes.root} noValidate autoComplete="off" color="theme.palette.primary.text">
           <TextField id="username-input" label="Username" variant="filled" fullWidth />
           <TextField id="password-input" label="Password" type="password" variant="filled" fullWidth />
