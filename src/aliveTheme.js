@@ -6,6 +6,7 @@ const theme = responsiveFontSizes(
       type: 'light',
       primary: {
         main: '#fafafa',
+        text: '#000000',
       },
       secondary: {
         main: '#FF0000',

@@ -19,15 +19,16 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     display: 'flex',
     flexDirection: 'column',
-    width: '500px',
+    width: '410px',
     height: 'auto',
-    padding: theme.spacing(2, 4, 3),
+    padding: theme.spacing(4, 4, 3),
     outline: 'none',
+    color: 'black',
   },
   modalTitle: {
     fontSize: 20,
-    color: theme.palette.secondary.main,
     marginBottom: 10,
+    color: theme.palette.primary.text,
   },
   backdrop: {
     background: '#212121BF 0% 0% no-repeat padding-box',
