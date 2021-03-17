@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   },
   signInButton: {
     marginTop: theme.spacing(2),
-    backgroundColor: theme.palette.primary.text,
+    backgroundColor: theme.palette.secondary.main,
   },
   forgotPasswordLink: {
     margin: '20px 0px 30px',
