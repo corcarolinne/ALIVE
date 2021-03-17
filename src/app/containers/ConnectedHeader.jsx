@@ -7,6 +7,7 @@ import { Button } from '@material-ui/core'
 import Header from '../components/Header'
 import MainSearchField from './MainSearchField'
 import RegisterModal from './RegisterModal'
+import LoginModal from './LoginModal'
 import modules from '../modules'
 
 const ConnectedHeader = () => (
@@ -15,7 +16,7 @@ const ConnectedHeader = () => (
       <MainSearchField />
       <Button color="primary">About</Button>
       <RegisterModal />
-      <Button color="primary">Sign In</Button>
+      <LoginModal />
     </>
   </Header>
 )
