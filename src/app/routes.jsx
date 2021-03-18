@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 
 import modules from './modules'
 import Home from './containers/Pages/Home'
+import Channel from './containers/Pages/Channel'
 
 const Routes = ({ pathName }) => {
   useEffect(() => {
@@ -15,6 +16,7 @@ const Routes = ({ pathName }) => {
   return (
     <Switch>
       <Route exact path="/" component={Home} />
+      <Route exact path="/channel" component={Channel} />
     </Switch>
   )
 }
