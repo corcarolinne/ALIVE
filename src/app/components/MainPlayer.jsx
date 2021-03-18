@@ -15,33 +15,35 @@ const useStyles = makeStyles(() => ({
   },
 }))
 
-const MainPlayer = ({ uri, avatar, title, viewersNumber }) => {
+const MainPlayer = ({ uri, avatar, title, viewersNumber, hideChannelInfo }) => {
   const classes = useStyles()
   return (
     <Card>
       <CardActionArea>
         <ShakaPlayer uri={uri} width="100%" isPlaying isMuted />
-        <CardContent>
-          <Grid container alignItems="center" justify="space-between">
-            <Grid container item xs={8} alignItems="center">
-              <Avatar src={avatar} className={classes.avatar} />
-              <Typography variant="h5" component="h2">
-                {title}
-              </Typography>
-            </Grid>
-            <Grid container item xs={3} justify="flex-end" alignItems="center">
-              <Grid container item xs={4} className={classes.numberOfViewers}>
-                <PeopleAltOutlinedIcon />
-                <Typography>{viewersNumber}</Typography>
+        {!hideChannelInfo && (
+          <CardContent>
+            <Grid container alignItems="center" justify="space-between">
+              <Grid container item xs={8} alignItems="center">
+                <Avatar src={avatar} className={classes.avatar} />
+                <Typography variant="h5" component="h2">
+                  {title}
+                </Typography>
               </Grid>
-              <Grid item>
-                <Button variant="contained" color="secondary">
-                  Follow
-                </Button>
+              <Grid container item xs={3} justify="flex-end" alignItems="center">
+                <Grid container item xs={4} className={classes.numberOfViewers}>
+                  <PeopleAltOutlinedIcon />
+                  <Typography>{viewersNumber}</Typography>
+                </Grid>
+                <Grid item>
+                  <Button variant="contained" color="secondary">
+                    Follow
+                  </Button>
+                </Grid>
               </Grid>
             </Grid>
-          </Grid>
-        </CardContent>
+          </CardContent>
+        )}
       </CardActionArea>
     </Card>
   )
@@ -52,11 +54,13 @@ MainPlayer.propTypes = {
   avatar: PropTypes.string,
   title: PropTypes.string,
   viewersNumber: PropTypes.string,
+  hideChannelInfo: PropTypes.bool,
 }
 MainPlayer.defaultProps = {
   uri: '',
   avatar: '',
   title: '',
   viewersNumber: '',
+  hideChannelInfo: false,
 }
 export default memo(MainPlayer)

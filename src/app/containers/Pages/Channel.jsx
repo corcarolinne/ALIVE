@@ -54,6 +54,7 @@ const Channel = () => {
             avatar="https://viewer-user-avatars.s3-eu-west-1.amazonaws.com/9c7e69141a9b9898_c5b37c5b-f8f8-4e2f-ad07-6ee2d9ff2979"
             title="Live Title"
             viewersNumber="12,890"
+            hideChannelInfo
           />
         </Grid>
         <Grid item className={classes.gridItem}>
