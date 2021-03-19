@@ -11,7 +11,10 @@ import {
   FormControlLabel,
   FormControl,
   FormLabel,
+  Avatar,
+  IconButton,
 } from '@material-ui/core'
+import EditIcon from '@material-ui/icons/Edit'
 import DateFnsUtils from '@date-io/date-fns'
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers'
 import AliveModal from '../components/AliveModal'
@@ -19,7 +22,6 @@ import AliveModal from '../components/AliveModal'
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    flexDirection: 'column',
     alignItems: 'center',
 
     '& .MuiTextField-root': {
@@ -33,6 +35,16 @@ const useStyles = makeStyles((theme) => ({
   deleteAccountButton: {
     backgroundColor: theme.palette.primary.dark,
     marginTop: theme.spacing(1),
+  },
+  channelAvatar: {
+    width: theme.spacing(18),
+    height: theme.spacing(18),
+  },
+  avatarEditDiv: {
+    display: 'flex',
+    position: 'relative',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 }))
 
@@ -62,6 +74,15 @@ const SettingsModal = () => {
         Profile
       </Button>
       <AliveModal open={open} className={classes.modalWrapper} onClose={handleClose} title="Profile Settings">
+        <div className={classes.avatarEditDiv}>
+          <Avatar
+            className={classes.channelAvatar}
+            src="https://viewer-user-avatars.s3-eu-west-1.amazonaws.com/9c7e69141a9b9898_c5b37c5b-f8f8-4e2f-ad07-6ee2d9ff2979"
+          />
+          <IconButton style={{ position: 'absolute' }} aria-label="edit">
+            <EditIcon />
+          </IconButton>
+        </div>
         <form className={classes.root} noValidate autoComplete="off" color="theme.palette.primary.text">
           <TextField color="secondary" id="fname-input" label="First Name" variant="filled" fullWidth />
           <TextField color="secondary" id="lname-input" label="Last Name" variant="filled" fullWidth />
