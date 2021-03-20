@@ -27,7 +27,10 @@ const useStyles = makeStyles((theme) => ({
       width: '100vw',
     },
   },
-  title: { fontSize: '20px' },
+  titleContainer: {
+    width: '100%',
+  },
+  title: { fontSize: '20px', fontWeight: 'bold', marginTop: '40px' },
   divider: { margin: '10px 0px 10px 0px' },
 }))
 
@@ -44,10 +47,10 @@ const SimplePage = ({ className, layout, children, title, ...props }) => {
       {...props}
     >
       {title && (
-        <>
+        <div className={classes.titleContainer}>
           <Typography className={classes.title}>{title}</Typography>
           <Divider className={classes.divider} />
-        </>
+        </div>
       )}
       {children}
     </Grid>

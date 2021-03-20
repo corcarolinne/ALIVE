@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 import modules from './modules'
 import Home from './containers/Pages/Home'
 import Channel from './containers/Pages/Channel'
+import Following from './containers/Pages/Following'
 
 const Routes = ({ pathName }) => {
   useEffect(() => {
@@ -17,6 +18,7 @@ const Routes = ({ pathName }) => {
     <Switch>
       <Route exact path="/" component={Home} />
       <Route exact path="/channel" component={Channel} />
+      <Route exact path="/following" component={Following} />
     </Switch>
   )
 }
