@@ -3,12 +3,7 @@ import PropTypes from 'prop-types'
 
 import { makeStyles } from '@material-ui/core/styles'
 
-import ListItem from '@material-ui/core/ListItem'
-import Divider from '@material-ui/core/Divider'
-import Typography from '@material-ui/core/Typography'
-
-import PopperList from './PopperList'
-import UserName from './UserName'
+import Menu from '@material-ui/core/Menu'
 
 const useStyles = makeStyles((theme) => ({
   userInfo: {
@@ -35,24 +30,17 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: '1.67',
     letterSpacing: '-0.08px',
   },
+  popover: {
+    backgroundColor: theme.palette.primary.dark,
+  },
 }))
 
-const UserMenu = ({ user, children }) => {
+const UserMenu = ({ user, children, ...props }) => {
   const classes = useStyles()
   return (
-    <PopperList
-      anchorMargin="0px 0px 0px 40px"
-      anchor={<UserName customStyles={{ avatar: classes.userAvatar }} avatarSrc={user.avatar} />}
-    >
-      <ListItem>
-        <div className={classes.userInfo}>
-          <Typography className={classes.userDisplayName}>{user.displayName}</Typography>
-          <Typography className={classes.userEmail}>{user.email}</Typography>
-        </div>
-      </ListItem>
-      <Divider />
+    <Menu {...props} PopoverClasses={{ paper: classes.popover }}>
       {children}
-    </PopperList>
+    </Menu>
   )
 }
 

@@ -1,7 +1,9 @@
 import React, { memo, useState } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import {
+  MenuItem,
   Button,
   TextField,
   makeStyles,
@@ -52,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const SettingsModal = () => {
+const SettingsModal = ({ onClick }) => {
   const [selectedDate, setSelectedDate] = React.useState(new Date('2014-08-18T21:11:54'))
   const [value, setSelectedPronoun] = React.useState('He/him')
   const [open, setOpen] = useState(false)
@@ -65,6 +67,7 @@ const SettingsModal = () => {
   }
   const handleOpen = () => {
     setOpen(true)
+    onClick()
   }
 
   const handleClose = () => {
@@ -74,9 +77,9 @@ const SettingsModal = () => {
   const classes = useStyles()
   return (
     <>
-      <Button color="primary" style={{ margin: '0 5px' }} onClick={handleOpen}>
+      <MenuItem color="primary" style={{ margin: '0 5px' }} onClick={handleOpen}>
         Profile
-      </Button>
+      </MenuItem>
       <AliveModal open={open} className={classes.modalWrapper} onClose={handleClose} title="Profile Settings">
         <Grid className={classes.root} container justify="space-around" alignItems="flex-start">
           <Grid item className={classes.avatarEditDiv}>
@@ -204,9 +207,13 @@ const SettingsModal = () => {
   )
 }
 
-SettingsModal.propTypes = {}
+SettingsModal.propTypes = {
+  onClick: PropTypes.func,
+}
 
-SettingsModal.defaultProps = {}
+SettingsModal.defaultProps = {
+  onClick: () => {},
+}
 
 const mapStateToProps = createStructuredSelector({})
 
