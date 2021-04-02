@@ -16,11 +16,6 @@ export const getLoginTab = get([MODULE_NAME, 'loginTab'])
 export const getSignUpStep = get([MODULE_NAME, 'signUpStep'])
 export const getSignUpError = get([MODULE_NAME, 'signUpError'])
 
-export const isUserCreator = createSelector(
-  getUser, //
-  ({ role }) => role === 'creator'
-)
-
 export const getCreateAccountError = createSelector(
   getUser, //
   getSignUpError,

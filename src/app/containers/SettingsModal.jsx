@@ -19,6 +19,7 @@ import {
 import EditIcon from '@material-ui/icons/Edit'
 import DateFnsUtils from '@date-io/date-fns'
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers'
+import modules from '../modules'
 import AliveModal from '../components/AliveModal'
 
 const useStyles = makeStyles((theme) => ({
@@ -54,17 +55,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const SettingsModal = ({ onClick }) => {
-  const [selectedDate, setSelectedDate] = React.useState(new Date('2014-08-18T21:11:54'))
-  const [value, setSelectedPronoun] = React.useState('He/him')
+const SettingsModal = ({ onClick, user }) => {
   const [open, setOpen] = useState(false)
-
-  const handleDateChange = (date) => {
-    setSelectedDate(date)
-  }
-  const handlePronounChange = (pronoun) => {
-    setSelectedPronoun(pronoun.target.value)
-  }
   const handleOpen = () => {
     setOpen(true)
     onClick()
@@ -83,10 +75,7 @@ const SettingsModal = ({ onClick }) => {
       <AliveModal open={open} className={classes.modalWrapper} onClose={handleClose} title="Profile Settings">
         <Grid className={classes.root} container justify="space-around" alignItems="flex-start">
           <Grid item className={classes.avatarEditDiv}>
-            <Avatar
-              className={classes.channelAvatar}
-              src="https://viewer-user-avatars.s3-eu-west-1.amazonaws.com/9c7e69141a9b9898_c5b37c5b-f8f8-4e2f-ad07-6ee2d9ff2979"
-            />
+            <Avatar className={classes.channelAvatar} src={user.avatar} />
             <IconButton style={{ position: 'absolute' }} aria-label="edit">
               <EditIcon />
             </IconButton>
@@ -112,6 +101,7 @@ const SettingsModal = ({ onClick }) => {
                       label="First Name"
                       variant="filled"
                       fullWidth
+                      value={user.firstName}
                     />
                   </Grid>
                   <Grid item>
@@ -122,6 +112,7 @@ const SettingsModal = ({ onClick }) => {
                       label="Last Name"
                       variant="filled"
                       fullWidth
+                      value={user.surname}
                     />
                   </Grid>
                   <Grid item>
@@ -133,6 +124,7 @@ const SettingsModal = ({ onClick }) => {
                       type="password"
                       variant="filled"
                       fullWidth
+                      value={user.password}
                     />
                   </Grid>
                 </Grid>
@@ -147,9 +139,8 @@ const SettingsModal = ({ onClick }) => {
                         format="dd/MM/yyyy"
                         margin="normal"
                         id="date-picker-inline"
-                        label="Date picker inline"
-                        value={selectedDate}
-                        onChange={handleDateChange}
+                        label="Date of Birth"
+                        value={new Date(user.dob)}
                         color="secondary"
                         KeyboardButtonProps={{
                           'aria-label': 'change date',
@@ -162,10 +153,25 @@ const SettingsModal = ({ onClick }) => {
                       <FormLabel component="legend" color="secondary">
                         Pronouns
                       </FormLabel>
-                      <RadioGroup aria-label="pronouns" name="pronouns" value={value} onChange={handlePronounChange}>
-                        <FormControlLabel value="masculine" control={<Radio />} label="He/him" />
-                        <FormControlLabel value="feminine" control={<Radio />} label="She/her" />
-                        <FormControlLabel value="neutral" control={<Radio />} label="They/them" />
+                      <RadioGroup aria-label="pronouns" name="pronouns" value={user.pronouns}>
+                        <FormControlLabel
+                          value="masculine"
+                          control={<Radio />}
+                          label="He/him"
+                          checked={user.pronoun === 'masculine'}
+                        />
+                        <FormControlLabel
+                          value="feminine"
+                          control={<Radio />}
+                          label="She/her"
+                          checked={user.pronoun === 'feminine'}
+                        />
+                        <FormControlLabel
+                          value="neutral"
+                          control={<Radio />}
+                          label="They/them"
+                          checked={user.pronoun === 'neutral'}
+                        />
                       </RadioGroup>
                     </FormControl>
                   </Grid>
@@ -177,10 +183,10 @@ const SettingsModal = ({ onClick }) => {
                 <TextField
                   className={classes.multilineField}
                   id="filled-multiline-static"
-                  label="Multiline"
+                  label="Bio"
                   multiline
                   rows={4}
-                  defaultValue="Default Value"
+                  value={user.bio}
                   variant="filled"
                   color="secondary"
                 />
@@ -209,13 +215,16 @@ const SettingsModal = ({ onClick }) => {
 
 SettingsModal.propTypes = {
   onClick: PropTypes.func,
+  user: PropTypes.object.isRequired,
 }
 
 SettingsModal.defaultProps = {
   onClick: () => {},
 }
 
-const mapStateToProps = createStructuredSelector({})
+const mapStateToProps = createStructuredSelector({
+  user: modules.auth.selectors.getUser,
+})
 
 const mapDispatchToProps = {}
 

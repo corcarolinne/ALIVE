@@ -1,5 +1,5 @@
 import React, { memo } from 'react'
-// import PropTypes from 'prop-types'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 
@@ -9,40 +9,9 @@ import SimplePage from '../../components/SimplePage'
 import Thumbnail from '../../components/Thumbnail'
 import MainPlayer from '../../components/MainPlayer'
 
-const mockLives = [
-  {
-    avatar: 'https://viewer-user-avatars.s3-eu-west-1.amazonaws.com/9c7e69141a9b9898_c5b37c5b-f8f8-4e2f-ad07-6ee2d9ff2979',
-    image: 'http://i3.ytimg.com/vi/bV2lzpk3O04/maxresdefault.jpg',
-    title: 'live 1',
-  },
-  {
-    avatar: 'https://viewer-user-avatars.s3-eu-west-1.amazonaws.com/9c7e69141a9b9898_c5b37c5b-f8f8-4e2f-ad07-6ee2d9ff2979',
-    image: 'http://i3.ytimg.com/vi/bV2lzpk3O04/maxresdefault.jpg',
-    title: 'live 1',
-  },
-  {
-    avatar: 'https://viewer-user-avatars.s3-eu-west-1.amazonaws.com/9c7e69141a9b9898_c5b37c5b-f8f8-4e2f-ad07-6ee2d9ff2979',
-    image: 'http://i3.ytimg.com/vi/bV2lzpk3O04/maxresdefault.jpg',
-    title: 'live 1',
-  },
-  {
-    avatar: 'https://viewer-user-avatars.s3-eu-west-1.amazonaws.com/9c7e69141a9b9898_c5b37c5b-f8f8-4e2f-ad07-6ee2d9ff2979',
-    image: 'http://i3.ytimg.com/vi/bV2lzpk3O04/maxresdefault.jpg',
-    title: 'live 1',
-  },
-  {
-    avatar: 'https://viewer-user-avatars.s3-eu-west-1.amazonaws.com/9c7e69141a9b9898_c5b37c5b-f8f8-4e2f-ad07-6ee2d9ff2979',
-    image: 'http://i3.ytimg.com/vi/bV2lzpk3O04/maxresdefault.jpg',
-    title: 'live 1',
-  },
-  {
-    avatar: 'https://viewer-user-avatars.s3-eu-west-1.amazonaws.com/9c7e69141a9b9898_c5b37c5b-f8f8-4e2f-ad07-6ee2d9ff2979',
-    image: 'http://i3.ytimg.com/vi/bV2lzpk3O04/maxresdefault.jpg',
-    title: 'live 1',
-  },
-]
+import modules from '../../modules'
 
-const Home = () => (
+const Home = ({ lives }) => (
   <SimplePage>
     <Grid
       style={{
@@ -64,7 +33,7 @@ const Home = () => (
       </Grid>
       <Grid item>
         <Grid container spacing={3} justify="center">
-          {mockLives.map((item) => (
+          {lives.map((item) => (
             <Grid item xs={12} sm={4}>
               <Thumbnail avatar={item.avatar} title={item.title} image={item.image} />
             </Grid>
@@ -75,9 +44,13 @@ const Home = () => (
   </SimplePage>
 )
 
-Home.propTypes = {}
+Home.propTypes = {
+  lives: PropTypes.array.isRequired,
+}
 
-const mapStateToProps = createStructuredSelector({})
+const mapStateToProps = createStructuredSelector({
+  lives: modules.home.selectors.getLives,
+})
 
 const mapDispatchToProps = {}
 
