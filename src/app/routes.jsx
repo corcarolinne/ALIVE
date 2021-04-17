@@ -17,7 +17,7 @@ const Routes = ({ pathName }) => {
   return (
     <Switch>
       <Route exact path="/" component={Home} />
-      <Route exact path="/channel" component={Channel} />
+      <Route exact path="/channel/:channelId" component={Channel} />
       <Route exact path="/following" component={Following} />
     </Switch>
   )

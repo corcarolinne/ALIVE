@@ -2,6 +2,7 @@ import React, { memo } from 'react'
 import PropTypes from 'prop-types'
 
 import { Button, Grid, Typography, Avatar, makeStyles } from '@material-ui/core'
+import { identity } from 'lodash'
 
 const useStyles = makeStyles((theme) => ({
   channelItem: {
@@ -22,11 +23,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const ChannelItem = ({ avatar, channelName }) => {
+const ChannelItem = ({ avatar, channelName, onClick }) => {
   const classes = useStyles()
-
   return (
-    <Grid container className={classes.channelItem}>
+    <Grid container className={classes.channelItem} onClick={onClick}>
       <Avatar className={classes.channelAvatar} src={avatar} />
       <Grid item>
         <Typography variant="subtitle1" className={classes.channelName}>
@@ -43,11 +43,13 @@ const ChannelItem = ({ avatar, channelName }) => {
 }
 
 ChannelItem.propTypes = {
+  onClick: PropTypes.func,
   avatar: PropTypes.string,
   channelName: PropTypes.string,
 }
 
 ChannelItem.defaultProps = {
+  onClick: identity,
   avatar: '',
   channelName: '',
 }
