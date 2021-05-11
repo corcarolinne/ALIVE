@@ -35,7 +35,7 @@ const Home = ({ lives }) => (
       <Grid item>
         <Grid container spacing={3} justify="center">
           {lives.map((item) => (
-            <Grid item xs={12} sm={4}>
+            <Grid key={item.channelId} item xs={12} sm={4}>
               <Thumbnail avatar={item.avatar} title={item.title} image={item.image} channelId={item.channelId} />
             </Grid>
           ))}

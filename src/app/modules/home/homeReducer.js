@@ -44,12 +44,21 @@ const initialState = {
       channelId: 'ff',
     },
   ],
+  register: {
+    email: '',
+    userName: '',
+    password: '',
+  },
 }
 
 export const reducer = produce((state = initialState, action) => {
   switch (action.type) {
     case actions.SET_EX: {
       state.ex = action.payload
+      break
+    }
+    case actions.CHANGE_REGISTER_FIELD: {
+      state.register[action.payload.field] = action.payload.value
       break
     }
     default:
