@@ -15,6 +15,8 @@ export const getUser = get([MODULE_NAME, 'user'])
 export const getLoginTab = get([MODULE_NAME, 'loginTab'])
 export const getSignUpStep = get([MODULE_NAME, 'signUpStep'])
 export const getSignUpError = get([MODULE_NAME, 'signUpError'])
+export const getRegisterValues = (state) => state.auth.register
+export const getLoginValues = (state) => state.auth.login
 
 export const getCreateAccountError = createSelector(
   getUser, //

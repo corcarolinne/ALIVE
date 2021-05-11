@@ -1,8 +1,11 @@
 import React, { memo, useState } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { Button, TextField, makeStyles, Typography } from '@material-ui/core'
 import AliveLogoDark from '../../assets/icons/AliveLogoDark'
+
+import modules from '../modules'
 
 import AliveModal from '../components/AliveModal'
 
@@ -32,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const LoginModal = () => {
+const LoginModal = ({ loginValues, changeLoginField }) => {
   const [open, setOpen] = useState(false)
 
   const handleOpen = () => {
@@ -51,8 +54,23 @@ const LoginModal = () => {
       </Button>
       <AliveModal open={open} onClose={handleClose} title={<AliveLogoDark />}>
         <form className={classes.root} noValidate autoComplete="off" color="theme.palette.primary.text">
-          <TextField id="username-input" label="Username" variant="filled" fullWidth />
-          <TextField id="password-input" label="Password" type="password" variant="filled" fullWidth />
+          <TextField
+            id="username-input"
+            label="Username"
+            variant="filled"
+            fullWidth
+            value={loginValues.username}
+            onChange={(event) => changeLoginField('username', event.target.value)}
+          />
+          <TextField
+            id="password-input"
+            label="Password"
+            type="password"
+            variant="filled"
+            fullWidth
+            value={loginValues.password}
+            onChange={(event) => changeLoginField('password', event.target.value)}
+          />
           <Button className={classes.signInButton} variant="contained" color="secondary">
             Sign In
           </Button>
@@ -66,12 +84,19 @@ const LoginModal = () => {
   )
 }
 
-LoginModal.propTypes = {}
+LoginModal.propTypes = {
+  loginValues: PropTypes.object.isRequired,
+  changeLoginField: PropTypes.func.isRequired,
+}
 
 LoginModal.defaultProps = {}
 
-const mapStateToProps = createStructuredSelector({})
+const mapStateToProps = createStructuredSelector({
+  loginValues: modules.auth.selectors.getLoginValues,
+})
 
-const mapDispatchToProps = {}
+const mapDispatchToProps = {
+  changeLoginField: modules.auth.actions.changeLoginField,
+}
 
 export default memo(connect(mapStateToProps, mapDispatchToProps)(LoginModal))

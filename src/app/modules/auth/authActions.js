@@ -19,6 +19,9 @@ export const SET_SIGN_UP_STEP = `${MODULE_NAME}/SET_SIGN_UP_STEP`
 export const AFTER_LOGIN_GO_TO = `${MODULE_NAME}/AFTER_LOGIN_GO_TO`
 export const RESET_AUTH_REDUCER_STATE = `${MODULE_NAME}/RESET_AUTH_REDUCER_STATE`
 export const SET_ALPHA_KEY_INPUT = `${MODULE_NAME}/SET_ALPHA_KEY_INPUT`
+export const CHANGE_LOGIN_FIELD = 'home/CHANGE_LOGIN_FIELD'
+export const CHANGE_PROFILE_FIELD = 'home/CHANGE_PROFILE_FIELD'
+export const CHANGE_REGISTER_FIELD = 'home/CHANGE_REGISTER_FIELD'
 
 /**
  * Action creators
@@ -45,4 +48,26 @@ export const resetAuthReducer = () => ({
 export const setAlphaKeyInput = (payload) => ({
   type: SET_ALPHA_KEY_INPUT,
   payload,
+})
+export const changeLoginField = (field, value) => ({
+  type: CHANGE_LOGIN_FIELD,
+  payload: {
+    field,
+    value,
+  },
+})
+
+export const changeProfileField = (field, value) => ({
+  type: CHANGE_PROFILE_FIELD,
+  payload: {
+    field,
+    value,
+  },
+})
+export const changeRegisterField = (field, value) => ({
+  type: CHANGE_REGISTER_FIELD,
+  payload: {
+    field,
+    value,
+  },
 })

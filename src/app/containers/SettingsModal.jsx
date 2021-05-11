@@ -55,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const SettingsModal = ({ onClick, user }) => {
+const SettingsModal = ({ onClick, user, changeProfileField }) => {
   const [open, setOpen] = useState(false)
   const handleOpen = () => {
     setOpen(true)
@@ -102,6 +102,7 @@ const SettingsModal = ({ onClick, user }) => {
                       variant="filled"
                       fullWidth
                       value={user.firstName}
+                      onChange={(event) => changeProfileField('firstName', event.target.value)}
                     />
                   </Grid>
                   <Grid item>
@@ -113,6 +114,7 @@ const SettingsModal = ({ onClick, user }) => {
                       variant="filled"
                       fullWidth
                       value={user.surname}
+                      onChange={(event) => changeProfileField('surname', event.target.value)}
                     />
                   </Grid>
                   <Grid item>
@@ -125,6 +127,7 @@ const SettingsModal = ({ onClick, user }) => {
                       variant="filled"
                       fullWidth
                       value={user.password}
+                      onChange={(event) => changeProfileField('surname', event.target.value)}
                     />
                   </Grid>
                 </Grid>
@@ -145,6 +148,7 @@ const SettingsModal = ({ onClick, user }) => {
                         KeyboardButtonProps={{
                           'aria-label': 'change date',
                         }}
+                        onChange={(event) => changeProfileField('dob', event.target.value)}
                       />
                     </MuiPickersUtilsProvider>
                   </Grid>
@@ -159,18 +163,21 @@ const SettingsModal = ({ onClick, user }) => {
                           control={<Radio />}
                           label="He/him"
                           checked={user.pronoun === 'masculine'}
+                          onChange={(event) => changeProfileField('pronoun', event.target.value)}
                         />
                         <FormControlLabel
                           value="feminine"
                           control={<Radio />}
                           label="She/her"
                           checked={user.pronoun === 'feminine'}
+                          onChange={(event) => changeProfileField('pronoun', event.target.value)}
                         />
                         <FormControlLabel
                           value="neutral"
                           control={<Radio />}
                           label="They/them"
                           checked={user.pronoun === 'neutral'}
+                          onChange={(event) => changeProfileField('pronoun', event.target.value)}
                         />
                       </RadioGroup>
                     </FormControl>
@@ -189,6 +196,7 @@ const SettingsModal = ({ onClick, user }) => {
                   value={user.bio}
                   variant="filled"
                   color="secondary"
+                  onChange={(event) => changeProfileField('bio', event.target.value)}
                 />
               </Grid>
 
@@ -216,6 +224,7 @@ const SettingsModal = ({ onClick, user }) => {
 SettingsModal.propTypes = {
   onClick: PropTypes.func,
   user: PropTypes.object.isRequired,
+  changeProfileField: PropTypes.func.isRequired,
 }
 
 SettingsModal.defaultProps = {
@@ -226,6 +235,8 @@ const mapStateToProps = createStructuredSelector({
   user: modules.auth.selectors.getUser,
 })
 
-const mapDispatchToProps = {}
+const mapDispatchToProps = {
+  changeProfileField: modules.auth.actions.changeProfileField,
+}
 
 export default memo(connect(mapStateToProps, mapDispatchToProps)(SettingsModal))
