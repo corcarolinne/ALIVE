@@ -11,7 +11,7 @@ import MainPlayer from '../../components/MainPlayer'
 
 import modules from '../../modules'
 
-const Home = ({ lives }) => (
+const Home = ({ mainLive, lives, follow, unfollow }) => (
   <SimplePage>
     <Grid
       style={{
@@ -25,18 +25,22 @@ const Home = ({ lives }) => (
     >
       <Grid item>
         <MainPlayer
-          channelId="canalDoWagner"
-          uri="https://d35xptopo3stpj.cloudfront.net/10f57900-5cba-4545-9b7d-01838e4b0360/dash/9fba20c0c15d73e0_9ca2485b42f2f3a1.mpd"
-          avatar="https://viewer-user-avatars.s3-eu-west-1.amazonaws.com/9c7e69141a9b9898_c5b37c5b-f8f8-4e2f-ad07-6ee2d9ff2979"
-          title="Live Title"
-          viewersNumber="12,890"
+          channelId={mainLive.id}
+          uri={mainLive.uri}
+          avatar={mainLive.channel.avatar}
+          title={mainLive.title}
+          viewersNumber={mainLive.viewersNumber}
+          isFollowing={mainLive.channel.isFollowing}
+          onFollow={() => follow(mainLive.id)}
+          onUnfollow={() => unfollow(mainLive.id)}
         />
       </Grid>
+
       <Grid item>
         <Grid container spacing={3} justify="center">
           {lives.map((item) => (
             <Grid key={item.channelId} item xs={12} sm={4}>
-              <Thumbnail avatar={item.avatar} title={item.title} image={item.image} channelId={item.channelId} />
+              <Thumbnail avatar={item.channel.avatar} title={item.title} image={item.image} channelId={item.channel.id} />
             </Grid>
           ))}
         </Grid>
@@ -46,13 +50,20 @@ const Home = ({ lives }) => (
 )
 
 Home.propTypes = {
+  mainLive: PropTypes.object.isRequired,
   lives: PropTypes.array.isRequired,
+  follow: PropTypes.func.isRequired,
+  unfollow: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = createStructuredSelector({
+  mainLive: modules.home.selectors.getMainLive,
   lives: modules.home.selectors.getLives,
 })
 
-const mapDispatchToProps = {}
+const mapDispatchToProps = {
+  follow: modules.home.actions.followChannel,
+  unfollow: modules.home.actions.unfollowChannel,
+}
 
 export default memo(connect(mapStateToProps, mapDispatchToProps)(Home))

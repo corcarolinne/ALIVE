@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/core/styles'
 import { Grid, Card, CardContent, CardActionArea, Typography, Button, Avatar, Box } from '@material-ui/core'
 import PeopleAltOutlinedIcon from '@material-ui/icons/PeopleAltOutlined'
-import { identity } from 'lodash'
 import { NavLink } from 'react-router-dom'
 
 import ShakaPlayer from './ShakaPlayer'
@@ -17,7 +16,7 @@ const useStyles = makeStyles(() => ({
   },
 }))
 
-const MainPlayer = ({ channelId, uri, avatar, title, viewersNumber, hideChannelInfo, onClick }) => {
+const MainPlayer = ({ channelId, uri, avatar, title, viewersNumber, hideChannelInfo, isFollowing, onFollow, onUnfollow }) => {
   const classes = useStyles()
   const enableVideoClick = channelId !== ''
   const Wrapper = enableVideoClick ? NavLink : Box
@@ -30,7 +29,7 @@ const MainPlayer = ({ channelId, uri, avatar, title, viewersNumber, hideChannelI
         }}
         to={`/channel/${channelId}`}
       >
-        <CardActionArea onClick={onClick}>
+        <CardActionArea>
           <ShakaPlayer uri={uri} width="100%" isPlaying isMuted />
           {!hideChannelInfo && (
             <CardContent>
@@ -47,8 +46,8 @@ const MainPlayer = ({ channelId, uri, avatar, title, viewersNumber, hideChannelI
                     <Typography>{viewersNumber}</Typography>
                   </Grid>
                   <Grid item>
-                    <Button variant="contained" color="secondary">
-                      Follow
+                    <Button variant="contained" color="secondary" onClick={isFollowing ? onUnfollow : onFollow}>
+                      {isFollowing ? 'Unfollow' : 'Follow'}
                     </Button>
                   </Grid>
                 </Grid>
@@ -68,7 +67,9 @@ MainPlayer.propTypes = {
   title: PropTypes.string,
   viewersNumber: PropTypes.string,
   hideChannelInfo: PropTypes.bool,
-  onClick: PropTypes.func,
+  isFollowing: PropTypes.string,
+  onFollow: PropTypes.func,
+  onUnfollow: PropTypes.func,
 }
 MainPlayer.defaultProps = {
   channelId: '',
@@ -77,6 +78,8 @@ MainPlayer.defaultProps = {
   title: '',
   viewersNumber: '',
   hideChannelInfo: false,
-  onClick: identity,
+  isFollowing: '',
+  onFollow: () => {},
+  onUnfollow: () => {},
 }
 export default memo(MainPlayer)
