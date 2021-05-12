@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const ChannelItem = ({ avatar, channelName, onClick }) => {
+const ChannelItem = ({ avatar, channelName, onClick, isFollowing, onFollow, onUnfollow }) => {
   const classes = useStyles()
   return (
     <Grid container className={classes.channelItem} onClick={onClick}>
@@ -34,8 +34,13 @@ const ChannelItem = ({ avatar, channelName, onClick }) => {
         </Typography>
       </Grid>
       <Grid item>
-        <Button variant="contained" className={classes.unfollowButton} color="secondary">
-          Unfollow
+        <Button
+          variant="contained"
+          className={classes.unfollowButton}
+          color="secondary"
+          onClick={isFollowing ? onUnfollow : onFollow}
+        >
+          {isFollowing ? 'Unfollow' : 'Follow'}
         </Button>
       </Grid>
     </Grid>
@@ -46,12 +51,18 @@ ChannelItem.propTypes = {
   onClick: PropTypes.func,
   avatar: PropTypes.string,
   channelName: PropTypes.string,
+  isFollowing: PropTypes.string,
+  onFollow: PropTypes.func,
+  onUnfollow: PropTypes.func,
 }
 
 ChannelItem.defaultProps = {
   onClick: identity,
   avatar: '',
   channelName: '',
+  isFollowing: '',
+  onFollow: () => {},
+  onUnfollow: () => {},
 }
 
 export default memo(ChannelItem)

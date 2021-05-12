@@ -10,12 +10,17 @@ import ChannelItem from '../../components/ChannelItem'
 
 import modules from '../../modules'
 
-const Following = ({ channels }) => (
+const Following = ({ followingChannels, unfollow }) => (
   <SimplePage title="Following">
     <Grid container alignItems="center" justify="center" spacing={5}>
-      {channels.map((item) => (
+      {followingChannels.map((item) => (
         <Grid item xs={3}>
-          <ChannelItem avatar={item.avatar} channelName={item.channelName} />
+          <ChannelItem
+            avatar={item.avatar}
+            channelName={item.channelName}
+            isFollowing={item.isFollowing}
+            onUnfollow={() => unfollow(item.id)}
+          />
         </Grid>
       ))}
     </Grid>
@@ -23,13 +28,16 @@ const Following = ({ channels }) => (
 )
 
 Following.propTypes = {
-  channels: PropTypes.array.isRequired,
+  followingChannels: PropTypes.array.isRequired,
+  unfollow: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = createStructuredSelector({
-  channels: modules.following.selectors.getChannels,
+  followingChannels: modules.following.selectors.getFollowingChannels,
 })
 
-const mapDispatchToProps = {}
+const mapDispatchToProps = {
+  unfollow: modules.following.actions.unfollowChannel,
+}
 
 export default memo(connect(mapStateToProps, mapDispatchToProps)(Following))
