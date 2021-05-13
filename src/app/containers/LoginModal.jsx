@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const LoginModal = ({ loginValues, changeLoginField }) => {
+const LoginModal = ({ loginValues, changeLoginField, login }) => {
   const [open, setOpen] = useState(false)
 
   const handleOpen = () => {
@@ -71,7 +71,7 @@ const LoginModal = ({ loginValues, changeLoginField }) => {
             value={loginValues.password}
             onChange={(event) => changeLoginField('password', event.target.value)}
           />
-          <Button className={classes.signInButton} variant="contained" color="secondary">
+          <Button className={classes.signInButton} variant="contained" color="secondary" onClick={login}>
             Sign In
           </Button>
           <Typography className={classes.forgotPasswordLink}>Forgot Password?</Typography>
@@ -87,6 +87,7 @@ const LoginModal = ({ loginValues, changeLoginField }) => {
 LoginModal.propTypes = {
   loginValues: PropTypes.object.isRequired,
   changeLoginField: PropTypes.func.isRequired,
+  login: PropTypes.func.isRequired,
 }
 
 LoginModal.defaultProps = {}
@@ -97,6 +98,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = {
   changeLoginField: modules.auth.actions.changeLoginField,
+  login: modules.auth.actions.login,
 }
 
 export default memo(connect(mapStateToProps, mapDispatchToProps)(LoginModal))

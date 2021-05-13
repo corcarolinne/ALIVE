@@ -8,9 +8,9 @@ import * as actions from './homeActions'
 const initialState = {
   lives: [
     {
-      uri:
-        'https://d35xptopo3stpj.cloudfront.net/10f57900-5cba-4545-9b7d-01838e4b0360/dash/9fba20c0c15d73e0_9ca2485b42f2f3a1.mpd',
-      image: 'http://i3.ytimg.com/vi/bV2lzpk3O04/maxresdefault.jpg',
+      uri: 'https://b43189d95416.eu-west-1.playback.live-video.net/api/video/v1/eu-west-1.248056333272.channel.X3k9AgkWFOnT.m3u8',
+      image:
+        'https://scontent-dub4-1.xx.fbcdn.net/v/t1.6435-9/110202748_114186017041375_3516819019169033276_n.jpg?_nc_cat=104&ccb=1-3&_nc_sid=8bfeb9&_nc_ohc=4NeaVTtcN2QAX_Df_R0&_nc_ht=scontent-dub4-1.xx&oh=ce9ddd7b4b72556f6aa289c2b9fc363e&oe=60C3BE38',
       title: 'live title',
       viewersNumber: 10234,
       hideChannelInfo: false,
@@ -22,9 +22,9 @@ const initialState = {
       },
     },
     {
-      uri:
-        'https://d35xptopo3stpj.cloudfront.net/10f57900-5cba-4545-9b7d-01838e4b0360/dash/9fba20c0c15d73e0_9ca2485b42f2f3a1.mpd',
-      image: 'http://i3.ytimg.com/vi/bV2lzpk3O04/maxresdefault.jpg',
+      uri: 'https://b43189d95416.eu-west-1.playback.live-video.net/api/video/v1/eu-west-1.248056333272.channel.X3k9AgkWFOnT.m3u8',
+      image:
+        'https://scontent-dub4-1.xx.fbcdn.net/v/t1.6435-9/110202748_114186017041375_3516819019169033276_n.jpg?_nc_cat=104&ccb=1-3&_nc_sid=8bfeb9&_nc_ohc=4NeaVTtcN2QAX_Df_R0&_nc_ht=scontent-dub4-1.xx&oh=ce9ddd7b4b72556f6aa289c2b9fc363e&oe=60C3BE38',
       title: 'live 2',
       viewersNumber: 10234,
       hideChannelInfo: false,
@@ -36,9 +36,9 @@ const initialState = {
       },
     },
     {
-      uri:
-        'https://d35xptopo3stpj.cloudfront.net/10f57900-5cba-4545-9b7d-01838e4b0360/dash/9fba20c0c15d73e0_9ca2485b42f2f3a1.mpd',
-      image: 'http://i3.ytimg.com/vi/bV2lzpk3O04/maxresdefault.jpg',
+      uri: 'https://b43189d95416.eu-west-1.playback.live-video.net/api/video/v1/eu-west-1.248056333272.channel.X3k9AgkWFOnT.m3u8',
+      image:
+        'https://scontent-dub4-1.xx.fbcdn.net/v/t1.6435-9/110202748_114186017041375_3516819019169033276_n.jpg?_nc_cat=104&ccb=1-3&_nc_sid=8bfeb9&_nc_ohc=4NeaVTtcN2QAX_Df_R0&_nc_ht=scontent-dub4-1.xx&oh=ce9ddd7b4b72556f6aa289c2b9fc363e&oe=60C3BE38',
       title: 'live 3',
       viewersNumber: 10234,
       hideChannelInfo: false,
@@ -50,9 +50,9 @@ const initialState = {
       },
     },
     {
-      uri:
-        'https://d35xptopo3stpj.cloudfront.net/10f57900-5cba-4545-9b7d-01838e4b0360/dash/9fba20c0c15d73e0_9ca2485b42f2f3a1.mpd',
-      image: 'http://i3.ytimg.com/vi/bV2lzpk3O04/maxresdefault.jpg',
+      uri: 'https://b43189d95416.eu-west-1.playback.live-video.net/api/video/v1/eu-west-1.248056333272.channel.X3k9AgkWFOnT.m3u8',
+      image:
+        'https://scontent-dub4-1.xx.fbcdn.net/v/t1.6435-9/110202748_114186017041375_3516819019169033276_n.jpg?_nc_cat=104&ccb=1-3&_nc_sid=8bfeb9&_nc_ohc=4NeaVTtcN2QAX_Df_R0&_nc_ht=scontent-dub4-1.xx&oh=ce9ddd7b4b72556f6aa289c2b9fc363e&oe=60C3BE38',
       title: 'live 4',
       viewersNumber: 10234,
       hideChannelInfo: false,

@@ -2,8 +2,6 @@ import React, { useRef, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/core/styles'
 import cx from 'classnames'
-import shaka from 'shaka-player'
-import identity from 'lodash/fp/identity'
 
 const useStyles = makeStyles(() => ({
   shakaPlayer: (styles) => ({ ...styles, outline: 'none', display: 'flex' }),
@@ -14,74 +12,54 @@ const ShakaPlayer = ({
   thumbnail,
   uri,
   isPlaying,
-  isMuted,
 
   width,
   height,
   objectFit,
 }) => {
   const videoRef = useRef(null)
-  const controller = useRef({})
 
   const classes = useStyles({ width, height, objectFit })
 
-  // Effect to handle component mount & unmount.
-  // Not related to the src prop, this hook creates a shaka.Player instance.
-  // This should always be the first effect to run.
   useEffect(() => {
-    const videoElement = videoRef.current
-    const player = new shaka.Player(videoElement)
-
-    // Store Shaka's API in order to expose it as a handle.
-    controller.current = { player, videoElement }
-
-    return () => {
-      if (document.pictureInPictureElement) {
-        // treat this better if I want to allow picinpic when changing page within the app
-        document.exitPictureInPicture().catch(identity)
+    if (videoRef.current) {
+      // handlePlayerReady
+      const handlePlayerReady = (src, elPlayer) => {
+        elPlayer.setRebufferToLive(true)
+        elPlayer.setAutoplay(true)
+        elPlayer.load(src)
+        elPlayer.setVolume(100)
       }
 
-      player.destroy()
+      const { PlayerState, PlayerEventType } = window.IVSPlayer
+
+      // Initialize player
+      const elPlayer = window.IVSPlayer.create()
+      elPlayer.attachHTMLVideoElement(videoRef.current)
+
+      // Attach event listeners
+      elPlayer.addEventListener(PlayerState.PLAYING, () => {
+        console.log('Player State - PLAYING')
+      })
+      elPlayer.addEventListener(PlayerState.ENDED, () => {
+        console.log('Player State - ENDED')
+      })
+      elPlayer.addEventListener(PlayerState.READY, () => {
+        console.log('Player State - READY')
+      })
+      elPlayer.addEventListener(PlayerEventType.ERROR, (err) => {
+        console.warn('Player Event - ERROR:', err)
+      })
+      elPlayer.addEventListener(PlayerEventType.TEXT_METADATA_CUE, (cue) => {
+        const metadataText = cue.text
+        const position = elPlayer.getPosition().toFixed(2)
+        console.log(`Player Event - TEXT_METADATA_CUE: "${metadataText}". Observed ${position}s after playback started.`)
+      })
+
+      // Player config
+      handlePlayerReady(uri, elPlayer)
     }
-    // eslint-disable-next-line
-  }, [])
-
-  // Load the source uri when we have one.
-  useEffect(() => {
-    const { player } = controller.current
-
-    if (player) {
-      shaka.polyfill.installAll()
-      // Check to see if the browser supports the basic APIs Shaka needs.
-      if (shaka.Player.isBrowserSupported()) {
-        // https://docs.aws.amazon.com/mediaconvert/latest/ug/cbr-vbr-qvbr.html#qvbr-guidelines
-        const Bandwidth = {
-          B: 6500000, // width="1280" height="720"
-          C: 5000000, // width="1280" height="720"
-          D: 3500000, // width="960"  height="540"
-          E: 3500000, // width="1280" height="720"
-          F: 1200000, // width="640"  height="360"
-          G: 600000, // width="640"  height="360"
-          H: 400000, // width="480"  height="270"
-        }
-        // Forces the video to start with a low quality
-        player.configure('abr.defaultBandwidthEstimate', Bandwidth.B)
-
-        player
-          .load(uri)
-          .then(() => {})
-          .catch(() => {
-            // eslint-disable-next-line
-            console.error('Failed to load video')
-          })
-      } else {
-        // This browser does not have the minimum set of APIs we need.
-        // eslint-disable-next-line
-        console.error('Browser not supported!')
-      }
-    }
-    // eslint-disable-next-line
-  }, [uri])
+  }, [uri, videoRef.current])
 
   return (
     // eslint-disable-next-line
@@ -91,7 +69,7 @@ const ShakaPlayer = ({
       poster={thumbnail}
       preload="auto"
       autoPlay={isPlaying}
-      muted={isMuted}
+      muted={false}
       controls
     />
   )
@@ -102,7 +80,6 @@ ShakaPlayer.propTypes = {
   uri: PropTypes.string,
   thumbnail: PropTypes.string,
   isPlaying: PropTypes.bool,
-  isMuted: PropTypes.bool,
   height: PropTypes.string,
   width: PropTypes.string,
   objectFit: PropTypes.string,
@@ -113,7 +90,6 @@ ShakaPlayer.defaultProps = {
   uri: '',
   thumbnail: '',
   isPlaying: false,
-  isMuted: false,
   height: 'auto',
   width: 'auto',
   objectFit: 'contain',

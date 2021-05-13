@@ -31,6 +31,7 @@ const Home = ({ mainLive, lives, follow, unfollow }) => (
           title={mainLive.title}
           viewersNumber={mainLive.viewersNumber}
           isFollowing={mainLive.channel.isFollowing}
+          thumbnail={mainLive.image}
           onFollow={() => follow(mainLive.id)}
           onUnfollow={() => unfollow(mainLive.id)}
         />

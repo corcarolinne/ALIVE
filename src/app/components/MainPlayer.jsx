@@ -16,7 +16,18 @@ const useStyles = makeStyles(() => ({
   },
 }))
 
-const MainPlayer = ({ channelId, uri, avatar, title, viewersNumber, hideChannelInfo, isFollowing, onFollow, onUnfollow }) => {
+const MainPlayer = ({
+  channelId,
+  uri,
+  avatar,
+  title,
+  viewersNumber,
+  hideChannelInfo,
+  isFollowing,
+  onFollow,
+  onUnfollow,
+  thumbnail,
+}) => {
   const classes = useStyles()
   const enableVideoClick = channelId !== ''
   const Wrapper = enableVideoClick ? NavLink : Box
@@ -30,7 +41,7 @@ const MainPlayer = ({ channelId, uri, avatar, title, viewersNumber, hideChannelI
         to={`/channel/${channelId}`}
       >
         <CardActionArea>
-          <ShakaPlayer uri={uri} width="100%" isPlaying isMuted />
+          <ShakaPlayer uri={uri} width="100%" thumbnail={thumbnail} isPlaying isMuted />
           {!hideChannelInfo && (
             <CardContent>
               <Grid container alignItems="center" justify="space-between">
@@ -62,6 +73,7 @@ const MainPlayer = ({ channelId, uri, avatar, title, viewersNumber, hideChannelI
 
 MainPlayer.propTypes = {
   channelId: PropTypes.string,
+  thumbnail: PropTypes.string,
   uri: PropTypes.string,
   avatar: PropTypes.string,
   title: PropTypes.string,
@@ -73,6 +85,7 @@ MainPlayer.propTypes = {
 }
 MainPlayer.defaultProps = {
   channelId: '',
+  thumbnail: '',
   uri: '',
   avatar: '',
   title: '',

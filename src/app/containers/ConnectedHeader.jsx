@@ -1,4 +1,5 @@
 import React, { memo } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { push } from 'connected-react-router'
@@ -16,7 +17,7 @@ import SettingsModal from './SettingsModal'
 import LoginModal from './LoginModal'
 import modules from '../modules'
 
-const ConnectedHeader = () => {
+const ConnectedHeader = ({ user }) => {
   const [anchorEl, setAnchorEl] = React.useState(null)
 
   const handleClick = (event) => {
@@ -31,37 +32,44 @@ const ConnectedHeader = () => {
     <Header showHeader shouldShowHeaderWithBackGround={false}>
       <MainSearchField />
       <Button color="primary">About</Button>
-      <RegisterModal />
-      <LoginModal />
-      <UserName
-        onClick={handleClick}
-        avatarSrc="https://viewer-user-avatars.s3-eu-west-1.amazonaws.com/9c7e69141a9b9898_c5b37c5b-f8f8-4e2f-ad07-6ee2d9ff2979"
-      />
-      <UserMenu id="simple-menu" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
-        <SettingsModal onClick={handleClose} />
-        <MenuItem onClick={handleClose}>
-          <NavLink
-            style={{
-              textDecoration: 'none',
-              color: 'black',
-            }}
-            to="/following"
-          >
-            Following
-          </NavLink>
-        </MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
-      </UserMenu>
+      {!user ? (
+        <>
+          <RegisterModal />
+          <LoginModal />
+        </>
+      ) : (
+        <>
+          <UserName
+            onClick={handleClick}
+            avatarSrc="https://viewer-user-avatars.s3-eu-west-1.amazonaws.com/9c7e69141a9b9898_c5b37c5b-f8f8-4e2f-ad07-6ee2d9ff2979"
+          />
+          <UserMenu id="simple-menu" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
+            <SettingsModal onClick={handleClose} />
+            <MenuItem onClick={handleClose}>
+              <NavLink
+                style={{
+                  textDecoration: 'none',
+                  color: 'black',
+                }}
+                to="/following"
+              >
+                Following
+              </NavLink>
+            </MenuItem>
+            <MenuItem onClick={handleClose}>Logout</MenuItem>
+          </UserMenu>
+        </>
+      )}
     </Header>
   )
 }
 
-// ConnectedHeader.propTypes = {
-//   // isMobile: PropTypes.bool.isRequired,
-//   // state
-//   // actions
-//   // pushPage: PropTypes.func.isRequired,
-// }
+ConnectedHeader.propTypes = {
+  user: PropTypes.object.isRequired,
+  // state
+  // actions
+  // pushPage: PropTypes.func.isRequired,
+}
 
 const mapStateToProps = createStructuredSelector({
   location: modules.router.selectors.getLocation,
