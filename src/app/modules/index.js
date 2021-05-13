@@ -4,6 +4,7 @@ import * as auth from './auth'
 import * as router from './router'
 import * as home from './home'
 import * as following from './following'
+import * as channel from './channel'
 
 export default {
   connectivity,
@@ -11,6 +12,7 @@ export default {
   router,
   home,
   following,
+  channel,
 }
 
 export const createRootReducer = (history) =>
@@ -20,4 +22,5 @@ export const createRootReducer = (history) =>
     router: router.reducers.reducer(history),
     home: home.reducers.reducer,
     following: following.reducers.reducer,
+    channel: channel.reducers.reducer,
   })

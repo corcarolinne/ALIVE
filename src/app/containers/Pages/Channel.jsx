@@ -1,5 +1,5 @@
 import React, { memo } from 'react'
-// import PropTypes from 'prop-types'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 
@@ -8,6 +8,8 @@ import { CardContent, Button, Grid, Card, Typography, Avatar, makeStyles } from 
 import SimplePage from '../../components/SimplePage'
 // import Thumbnail from '../../components/Thumbnail'
 import MainPlayer from '../../components/MainPlayer'
+
+import modules from '../../modules'
 
 const useStyles = makeStyles((theme) => ({
   gridItem: {
@@ -33,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const Channel = () => {
+const Channel = ({ unfollow, follow, live }) => {
   const classes = useStyles()
 
   return (
@@ -50,11 +52,14 @@ const Channel = () => {
       >
         <Grid item>
           <MainPlayer
-            uri="https://d35xptopo3stpj.cloudfront.net/10f57900-5cba-4545-9b7d-01838e4b0360/dash/9fba20c0c15d73e0_9ca2485b42f2f3a1.mpd"
-            avatar="https://viewer-user-avatars.s3-eu-west-1.amazonaws.com/9c7e69141a9b9898_c5b37c5b-f8f8-4e2f-ad07-6ee2d9ff2979"
-            title="Live Title"
-            viewersNumber="12,890"
-            hideChannelInfo
+            channelId={live.id}
+            uri={live.uri}
+            avatar={live.channel.avatar}
+            title={live.title}
+            viewersNumber={live.viewersNumber}
+            isFollowing={live.channel.isFollowing}
+            onFollow={() => follow(live.id)}
+            onUnfollow={() => unfollow(live.id)}
           />
         </Grid>
         <Grid item className={classes.gridItem}>
@@ -66,16 +71,20 @@ const Channel = () => {
               />
               <Grid item>
                 <Typography variant="h4" className={classes.channelName}>
-                  Channel Name
+                  {live.channel.channelName}
                 </Typography>
                 <Typography variant="body1" className={classes.channelBio}>
-                  (Bio Goes Here) Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc maximus, nulla ut commodo
-                  sagittis, sapien dui mattis dui.
+                  {live.channel.bio}
                 </Typography>
               </Grid>
               <Grid item>
-                <Button variant="contained" className={classes.followButton} color="secondary">
-                  Follow
+                <Button
+                  variant="contained"
+                  className={classes.followButton}
+                  color="secondary"
+                  onClick={live.channel.isFollowing ? unfollow : follow}
+                >
+                  {live.channel.isFollowing ? 'Unfollow' : 'Follow'}
                 </Button>
               </Grid>
             </CardContent>
@@ -86,10 +95,19 @@ const Channel = () => {
   )
 }
 
-Channel.propTypes = {}
+Channel.propTypes = {
+  live: PropTypes.object.isRequired,
+  unfollow: PropTypes.func.isRequired,
+  follow: PropTypes.func.isRequired,
+}
 
-const mapStateToProps = createStructuredSelector({})
+const mapStateToProps = createStructuredSelector({
+  live: modules.channel.selectors.getLive,
+})
 
-const mapDispatchToProps = {}
+const mapDispatchToProps = {
+  unfollow: modules.channel.actions.unfollowChannel,
+  follow: modules.channel.actions.followChannel,
+}
 
 export default memo(connect(mapStateToProps, mapDispatchToProps)(Channel))
