@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { push } from 'connected-react-router'
-import { Button } from '@material-ui/core'
 
 import MenuItem from '@material-ui/core/MenuItem'
 import { NavLink } from 'react-router-dom'
@@ -11,7 +10,6 @@ import { NavLink } from 'react-router-dom'
 import Header from '../components/Header'
 import UserMenu from '../components/UserMenu'
 import UserName from '../components/UserName'
-import MainSearchField from './MainSearchField'
 import RegisterModal from './RegisterModal'
 import SettingsModal from './SettingsModal'
 import LoginModal from './LoginModal'
@@ -30,8 +28,6 @@ const ConnectedHeader = ({ user, logout }) => {
 
   return (
     <Header showHeader shouldShowHeaderWithBackGround={false}>
-      <MainSearchField />
-      <Button color="primary">About</Button>
       {!user ? (
         <>
           <RegisterModal />
