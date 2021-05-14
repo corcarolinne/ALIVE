@@ -46,6 +46,7 @@ Following.propTypes = {
 }
 
 const mapStateToProps = createStructuredSelector({
+  user: modules.state.selectors.getUser,
   followingChannels: modules.state.selectors.getFollowingChannels,
 })
 
