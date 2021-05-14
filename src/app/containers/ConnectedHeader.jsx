@@ -39,10 +39,7 @@ const ConnectedHeader = ({ user }) => {
         </>
       ) : (
         <>
-          <UserName
-            onClick={handleClick}
-            avatarSrc="https://viewer-user-avatars.s3-eu-west-1.amazonaws.com/9c7e69141a9b9898_c5b37c5b-f8f8-4e2f-ad07-6ee2d9ff2979"
-          />
+          <UserName onClick={handleClick} avatarSrc={user.avatar} />
           <UserMenu id="simple-menu" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
             <SettingsModal onClick={handleClose} />
             <MenuItem onClick={handleClose}>
