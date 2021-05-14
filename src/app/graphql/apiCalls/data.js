@@ -8,7 +8,6 @@ export default [
     dob: '15/03/1996',
     avatar: 'https://viewer-user-avatars.s3-eu-west-1.amazonaws.com/a1de584b13e93ea9_f077ebed-6e82-4806-a924-408650695bf3',
     bio: 'This is my channel. Enjoy!',
-    numberOfFollows: 0,
     following: ['6105aefb-fa30-4d13-bcad-7b52934d0903'],
     obs_config: {
       rmrpLink: 'rtmps://b43189d95416.global-contribute.live-video.net:443/app/',
@@ -27,10 +26,8 @@ export default [
     displayName: 'jhonny',
     password: 'pass123',
     dob: '15/03/1996',
-    avatar:
-      'https://web.whatsapp.com/pp?e=https%3A%2F%2Fpps.whatsapp.net%2Fv%2Ft61.24694-24%2F170502600_194580065553105_9137018033825879689_n.jpg%3Fccb%3D11-4%26oh%3D768454a6ec279db33b2f4ef1f36f019e%26oe%3D60A2B904&t=l&u=353838708697%40c.us&i=1617731516&n=HwvXGemTCzTRIAKAp%2BJhvCR6eUwJKCsIooyjNYnQh%2BY%3D',
+    avatar: 'https://viewer-user-avatars.s3-eu-west-1.amazonaws.com/a617c768c002b0ca_cb7cf57c-6cdf-4c6e-ab5f-771db5323244',
     bio: 'This is my channel. Enjoy!',
-    numberOfFollows: 0,
     following: ['167d5272-cb89-4384-a253-cd1a2aaa7745'],
     obs_config: {
       rmrpLink: 'rtmps://b43189d95416.global-contribute.live-video.net:443/app/',
@@ -49,10 +46,8 @@ export default [
     displayName: 'mario',
     password: 'pass123',
     dob: '15/03/1996',
-    avatar:
-      'https://web.whatsapp.com/pp?e=https%3A%2F%2Fpps.whatsapp.net%2Fv%2Ft61.24694-24%2F154154974_5237519852988654_2398102619482435387_n.jpg%3Fccb%3D11-4%26oh%3D388a7ce4a857f52a271472f059693457%26oe%3D60A3C569&t=s&u=353838265569%40c.us&i=1614525338&n=RLA4c58gByv8I7AIh98Acpg55We1EC5hnvKsyzbeGfM%3D',
+    avatar: 'https://viewer-user-avatars.s3-eu-west-1.amazonaws.com/b0779bf9f07c7f85_a345ae30-54bc-4986-bdb2-c612130f657b',
     bio: 'This is my channel. Enjoy!',
-    numberOfFollows: 0,
     following: ['167d5272-cb89-4384-a253-cd1a2aaa7745'],
     obs_config: {
       rmrpLink: 'rtmps://b43189d95416.global-contribute.live-video.net:443/app/',
@@ -73,7 +68,6 @@ export default [
     dob: '15/03/1996',
     avatar: '',
     bio: 'This is a guest channel!',
-    numberOfFollows: 0,
     following: ['6105aefb-fa30-4d13-bcad-7b52934d0903'],
     obs_config: {
       rmrpLink: 'rtmps://b43189d95416.global-contribute.live-video.net:443/app/',

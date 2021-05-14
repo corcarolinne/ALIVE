@@ -93,12 +93,12 @@ LoginModal.propTypes = {
 LoginModal.defaultProps = {}
 
 const mapStateToProps = createStructuredSelector({
-  loginValues: modules.auth.selectors.getLoginValues,
+  loginValues: modules.state.selectors.getLoginValues,
 })
 
 const mapDispatchToProps = {
-  changeLoginField: modules.auth.actions.changeLoginField,
-  login: modules.auth.actions.login,
+  changeLoginField: modules.state.actions.changeLoginField,
+  login: modules.state.actions.login,
 }
 
 export default memo(connect(mapStateToProps, mapDispatchToProps)(LoginModal))

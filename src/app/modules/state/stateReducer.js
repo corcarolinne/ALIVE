@@ -1,12 +1,12 @@
 import produce from 'immer'
-import * as actions from './authActions'
+import * as actions from './stateActions'
 
 /**
  * Reducers
  */
 
 const initialState = {
-  server: 'http://34.242.219.210:4000/graphql',
+  data: [],
   user: null,
   register: {
     email: '',
@@ -21,6 +21,10 @@ const initialState = {
 
 export const reducer = produce((state = initialState, { type, payload }) => {
   switch (type) {
+    case actions.GET_DATA.SUCCEEDED: {
+      state.data = payload.data
+      break
+    }
     case actions.CHANGE_REGISTER_FIELD: {
       state.register[payload.field] = payload.value
       break
@@ -34,17 +38,22 @@ export const reducer = produce((state = initialState, { type, payload }) => {
       break
     }
     case actions.LOGIN: {
-      if (state.login.username === 'whorta' && state.login.password === 'pass123') {
-        state.user = {
-          firstName: 'Wagner',
-          surname: 'Horta',
-          displayName: 'whorta',
-          password: 'pass123',
-          dob: '03/10/1995',
-          pronoun: 'masculine',
-          avatar: 'https://viewer-user-avatars.s3-eu-west-1.amazonaws.com/9c7e69141a9b9898_c5b37c5b-f8f8-4e2f-ad07-6ee2d9ff2979',
-          bio: 'This is my channel. Enjoy!',
-        }
+      const user = state.data.find((item) => state.login.username === item.displayName && state.login.password === item.password)
+      if (user) {
+        state.user = user
+      }
+      break
+    }
+
+    case actions.FOLLOW_CHANNEL: {
+      if (state.user) {
+        state.user.following.push(payload)
+      }
+      break
+    }
+    case actions.UNFOLLOW_CHANNEL: {
+      if (state.user) {
+        state.user.following = (state.user.following || []).filter((item) => item !== payload)
       }
       break
     }

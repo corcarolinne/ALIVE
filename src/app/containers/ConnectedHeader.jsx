@@ -70,7 +70,7 @@ ConnectedHeader.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
   location: modules.router.selectors.getLocation,
-  user: modules.auth.selectors.getUser,
+  user: modules.state.selectors.getUser,
 })
 
 const mapDispatchToProps = {

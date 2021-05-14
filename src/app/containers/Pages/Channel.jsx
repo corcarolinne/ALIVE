@@ -35,8 +35,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const Channel = ({ unfollow, follow, live }) => {
+const Channel = ({ user, unfollow, follow, getChannel, location }) => {
   const classes = useStyles()
+
+  const channel = getChannel(location.pathname.replace('/channel/', ''))
+
+  const isFollowing = user?.following?.includes(channel?.id)
+
+  const handleFollow = (event) => {
+    event.preventDefault()
+    follow(channel?.id)
+  }
+
+  const handleUnfollow = (event) => {
+    event.preventDefault()
+    unfollow(channel?.id)
+  }
 
   return (
     <SimplePage>
@@ -52,29 +66,27 @@ const Channel = ({ unfollow, follow, live }) => {
       >
         <Grid item>
           <MainPlayer
-            channelId={live.id}
-            uri={live.uri}
-            avatar={live.channel.avatar}
-            title={live.title}
-            viewersNumber={live.viewersNumber}
-            isFollowing={live.channel.isFollowing}
-            onFollow={() => follow(live.id)}
-            onUnfollow={() => unfollow(live.id)}
+            channelId={channel?.id}
+            uri={channel?.live?.uri}
+            avatar={channel?.avatar}
+            title={channel?.displayName}
+            viewersNumber={channel?.following?.length}
+            isFollowing={isFollowing}
+            thumbnail={channel?.live?.image}
+            onFollow={handleFollow}
+            onUnfollow={handleUnfollow}
           />
         </Grid>
         <Grid item className={classes.gridItem}>
           <Card>
             <CardContent className={classes.channelInfo}>
-              <Avatar
-                className={classes.channelAvatar}
-                src="https://viewer-user-avatars.s3-eu-west-1.amazonaws.com/9c7e69141a9b9898_c5b37c5b-f8f8-4e2f-ad07-6ee2d9ff2979"
-              />
+              <Avatar className={classes.channelAvatar} src={channel?.avatar} />
               <Grid item>
                 <Typography variant="h4" className={classes.channelName}>
-                  {live.channel.channelName}
+                  {channel?.displayName}
                 </Typography>
                 <Typography variant="body1" className={classes.channelBio}>
-                  {live.channel.bio}
+                  {channel?.bio}
                 </Typography>
               </Grid>
               <Grid item>
@@ -82,9 +94,9 @@ const Channel = ({ unfollow, follow, live }) => {
                   variant="contained"
                   className={classes.followButton}
                   color="secondary"
-                  onClick={live.channel.isFollowing ? unfollow : follow}
+                  onClick={isFollowing ? handleUnfollow : handleFollow}
                 >
-                  {live.channel.isFollowing ? 'Unfollow' : 'Follow'}
+                  {isFollowing ? 'Unfollow' : 'Follow'}
                 </Button>
               </Grid>
             </CardContent>
@@ -96,18 +108,22 @@ const Channel = ({ unfollow, follow, live }) => {
 }
 
 Channel.propTypes = {
-  live: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
+  getChannel: PropTypes.func.isRequired,
   unfollow: PropTypes.func.isRequired,
   follow: PropTypes.func.isRequired,
+  location: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = createStructuredSelector({
-  live: modules.channel.selectors.getLive,
+  user: modules.state.selectors.getUser,
+  getChannel: modules.state.selectors.getChannel,
+  location: modules.router.selectors.getLocation,
 })
 
 const mapDispatchToProps = {
-  unfollow: modules.channel.actions.unfollowChannel,
-  follow: modules.channel.actions.followChannel,
+  unfollow: modules.state.actions.unfollowChannel,
+  follow: modules.state.actions.followChannel,
 }
 
 export default memo(connect(mapStateToProps, mapDispatchToProps)(Channel))

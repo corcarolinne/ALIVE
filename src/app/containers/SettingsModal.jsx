@@ -232,11 +232,11 @@ SettingsModal.defaultProps = {
 }
 
 const mapStateToProps = createStructuredSelector({
-  user: modules.auth.selectors.getUser,
+  user: modules.state.selectors.getUser,
 })
 
 const mapDispatchToProps = {
-  changeProfileField: modules.auth.actions.changeProfileField,
+  changeProfileField: modules.state.actions.changeProfileField,
 }
 
 export default memo(connect(mapStateToProps, mapDispatchToProps)(SettingsModal))

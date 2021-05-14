@@ -15,12 +15,7 @@ const Following = ({ followingChannels, unfollow }) => (
     <Grid container alignItems="center" justify="center" spacing={5}>
       {followingChannels.map((item) => (
         <Grid item xs={3}>
-          <ChannelItem
-            avatar={item.avatar}
-            channelName={item.channelName}
-            isFollowing={item.isFollowing}
-            onUnfollow={() => unfollow(item.id)}
-          />
+          <ChannelItem avatar={item.avatar} channelName={item.channelName} isFollowing onUnfollow={() => unfollow(item.id)} />
         </Grid>
       ))}
     </Grid>
@@ -33,11 +28,11 @@ Following.propTypes = {
 }
 
 const mapStateToProps = createStructuredSelector({
-  followingChannels: modules.following.selectors.getFollowingChannels,
+  followingChannels: modules.state.selectors.getFollowingChannels,
 })
 
 const mapDispatchToProps = {
-  unfollow: modules.following.actions.unfollowChannel,
+  unfollow: modules.state.actions.unfollowChannel,
 }
 
 export default memo(connect(mapStateToProps, mapDispatchToProps)(Following))

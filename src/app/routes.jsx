@@ -9,10 +9,13 @@ import Home from './containers/Pages/Home'
 import Channel from './containers/Pages/Channel'
 import Following from './containers/Pages/Following'
 
-const Routes = ({ pathName }) => {
+import api from './graphql'
+
+const Routes = ({ pathName, requestApiCall }) => {
   useEffect(() => {
     window.scrollTo(0, 0)
-  }, [pathName])
+    requestApiCall(api.callNames.getData, {}, modules.state.actions.GET_DATA)
+  }, [requestApiCall, pathName])
 
   return (
     <Switch>
@@ -26,10 +29,15 @@ const Routes = ({ pathName }) => {
 Routes.propTypes = {
   // state
   pathName: PropTypes.string.isRequired,
+  requestApiCall: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = createStructuredSelector({
   pathName: modules.router.selectors.getPathName,
 })
 
-export default connect(mapStateToProps)(Routes)
+const mapDispatchToProps = {
+  requestApiCall: modules.connectivity.actions.requestApiCall,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Routes)

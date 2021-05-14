@@ -11,7 +11,7 @@ import MainPlayer from '../../components/MainPlayer'
 
 import modules from '../../modules'
 
-const Home = ({ mainLive, lives, follow, unfollow }) => (
+const Home = ({ user, mainLive, lives, follow, unfollow }) => (
   <SimplePage>
     <Grid
       style={{
@@ -25,23 +25,29 @@ const Home = ({ mainLive, lives, follow, unfollow }) => (
     >
       <Grid item>
         <MainPlayer
-          channelId={mainLive.id}
-          uri={mainLive.uri}
-          avatar={mainLive.channel.avatar}
-          title={mainLive.title}
-          viewersNumber={mainLive.viewersNumber}
-          isFollowing={mainLive.channel.isFollowing}
-          thumbnail={mainLive.image}
-          onFollow={() => follow(mainLive.id)}
-          onUnfollow={() => unfollow(mainLive.id)}
+          channelId={mainLive?.id}
+          uri={mainLive?.live?.uri}
+          avatar={mainLive?.avatar}
+          title={mainLive?.displayName}
+          viewersNumber={mainLive?.following?.length}
+          isFollowing={user?.following?.includes(mainLive?.id)}
+          thumbnail={mainLive?.live?.image}
+          onFollow={(event) => {
+            event.preventDefault()
+            follow(mainLive?.id)
+          }}
+          onUnfollow={(event) => {
+            event.preventDefault()
+            unfollow(mainLive?.id)
+          }}
         />
       </Grid>
 
-      <Grid item>
-        <Grid container spacing={3} justify="center">
+      <Grid item style={{ width: '100%' }}>
+        <Grid container style={{ width: '100%' }} spacing={3} justify="center">
           {lives.map((item) => (
             <Grid key={item.channelId} item xs={12} sm={4}>
-              <Thumbnail avatar={item.channel.avatar} title={item.title} image={item.image} channelId={item.channel.id} />
+              <Thumbnail avatar={item?.avatar} title={item?.displayName} image={item?.live?.image} channelId={item?.id} />
             </Grid>
           ))}
         </Grid>
@@ -51,6 +57,7 @@ const Home = ({ mainLive, lives, follow, unfollow }) => (
 )
 
 Home.propTypes = {
+  user: PropTypes.object.isRequired,
   mainLive: PropTypes.object.isRequired,
   lives: PropTypes.array.isRequired,
   follow: PropTypes.func.isRequired,
@@ -58,13 +65,14 @@ Home.propTypes = {
 }
 
 const mapStateToProps = createStructuredSelector({
-  mainLive: modules.home.selectors.getMainLive,
-  lives: modules.home.selectors.getLives,
+  user: modules.state.selectors.getUser,
+  mainLive: modules.state.selectors.getMainLive,
+  lives: modules.state.selectors.getLives,
 })
 
 const mapDispatchToProps = {
-  follow: modules.home.actions.followChannel,
-  unfollow: modules.home.actions.unfollowChannel,
+  follow: modules.state.actions.followChannel,
+  unfollow: modules.state.actions.unfollowChannel,
 }
 
 export default memo(connect(mapStateToProps, mapDispatchToProps)(Home))

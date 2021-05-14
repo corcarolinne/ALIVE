@@ -91,11 +91,11 @@ RegisterModal.propTypes = {
 RegisterModal.defaultProps = {}
 
 const mapStateToProps = createStructuredSelector({
-  registerValues: modules.auth.selectors.getRegisterValues,
+  registerValues: modules.state.selectors.getRegisterValues,
 })
 
 const mapDispatchToProps = {
-  changeRegisterField: modules.auth.actions.changeRegisterField,
+  changeRegisterField: modules.state.actions.changeRegisterField,
 }
 
 export default memo(connect(mapStateToProps, mapDispatchToProps)(RegisterModal))
