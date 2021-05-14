@@ -17,4 +17,5 @@ export const getLives = (state) => tail(state[MODULE_NAME].data)
 
 // channel
 export const getChannel = (state) => (userId) => state[MODULE_NAME].data.find((item) => item.id === userId)
-export const getFollowingChannels = () => []
+export const getFollowingChannels = (state) =>
+  state[MODULE_NAME].user?.following.map((item) => state[MODULE_NAME].data.find((dataitem) => dataitem.id === item)) || []

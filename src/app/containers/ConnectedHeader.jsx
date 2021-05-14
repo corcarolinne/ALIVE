@@ -17,7 +17,7 @@ import SettingsModal from './SettingsModal'
 import LoginModal from './LoginModal'
 import modules from '../modules'
 
-const ConnectedHeader = ({ user }) => {
+const ConnectedHeader = ({ user, logout }) => {
   const [anchorEl, setAnchorEl] = React.useState(null)
 
   const handleClick = (event) => {
@@ -53,7 +53,14 @@ const ConnectedHeader = ({ user }) => {
                 Following
               </NavLink>
             </MenuItem>
-            <MenuItem onClick={handleClose}>Logout</MenuItem>
+            <MenuItem
+              onClick={() => {
+                handleClose()
+                logout()
+              }}
+            >
+              Logout
+            </MenuItem>
           </UserMenu>
         </>
       )}
@@ -65,7 +72,7 @@ ConnectedHeader.propTypes = {
   user: PropTypes.object.isRequired,
   // state
   // actions
-  // pushPage: PropTypes.func.isRequired,
+  logout: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = createStructuredSelector({
@@ -75,6 +82,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = {
   pushPage: push,
+  logout: modules.state.actions.logout,
 }
 
 export default memo(connect(mapStateToProps, mapDispatchToProps)(ConnectedHeader))

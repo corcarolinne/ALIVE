@@ -1,6 +1,26 @@
 import produce from 'immer'
 import * as actions from './stateActions'
 
+const convertCreatedUser = (item) => ({
+  id: item.user_id,
+  firstName: item.firstname,
+  surname: item.surname,
+  displayName: item.displayname,
+  password: item.password,
+  dob: item.dob,
+  avatar: item.avatar,
+  bio: item.bio,
+  following: item.following,
+  live: {
+    uri: item.live_uri,
+    image: item.live_image,
+  },
+  obs_config: {
+    rmrpLink: item.obs_config_rmrplink,
+    streamKey: item.obs_config_streamkey,
+  },
+})
+
 /**
  * Reducers
  */
@@ -45,16 +65,25 @@ export const reducer = produce((state = initialState, { type, payload }) => {
       break
     }
 
-    case actions.FOLLOW_CHANNEL: {
+    case actions.LOGOUT: {
+      state.user = null
+      break
+    }
+
+    case actions.FOLLOW_CHANNEL.REQUESTED: {
       if (state.user) {
-        state.user.following.push(payload)
+        state.user.following.push(payload.args.userToFollow)
       }
       break
     }
-    case actions.UNFOLLOW_CHANNEL: {
+    case actions.UNFOLLOW_CHANNEL.REQUESTED: {
       if (state.user) {
-        state.user.following = (state.user.following || []).filter((item) => item !== payload)
+        state.user.following = (state.user.following || []).filter((item) => item !== payload.args.userToUnfollow)
       }
+      break
+    }
+    case actions.CREATE_USER.REQUESTED: {
+      state.data.push(convertCreatedUser(payload.args.registerValues))
       break
     }
     default:

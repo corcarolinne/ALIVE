@@ -21,6 +21,7 @@ import DateFnsUtils from '@date-io/date-fns'
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers'
 import modules from '../modules'
 import AliveModal from '../components/AliveModal'
+import api from '../graphql'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -55,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const SettingsModal = ({ onClick, user, changeProfileField }) => {
+const SettingsModal = ({ onClick, user, changeProfileField, requestApiCall }) => {
   const [open, setOpen] = useState(false)
   const handleOpen = () => {
     setOpen(true)
@@ -63,6 +64,18 @@ const SettingsModal = ({ onClick, user, changeProfileField }) => {
   }
 
   const handleClose = () => {
+    setOpen(false)
+  }
+
+  const updateUser = (event) => {
+    event.preventDefault()
+    requestApiCall(
+      api.callNames.updateUser,
+      {
+        user,
+      },
+      modules.state.actions.UPDATE_USER
+    )
     setOpen(false)
   }
 
@@ -127,7 +140,7 @@ const SettingsModal = ({ onClick, user, changeProfileField }) => {
                       variant="filled"
                       fullWidth
                       value={user.password}
-                      onChange={(event) => changeProfileField('surname', event.target.value)}
+                      onChange={(event) => changeProfileField('password', event.target.value)}
                     />
                   </Grid>
                 </Grid>
@@ -227,14 +240,10 @@ const SettingsModal = ({ onClick, user, changeProfileField }) => {
               </Grid>
 
               <Grid item container justify="space-between">
-                <Grid item>
-                  <Button className={classes.deleteAccountButton} variant="contained">
-                    Delete Account
-                  </Button>
-                </Grid>
+                <Grid item />
 
                 <Grid item>
-                  <Button variant="contained" color="secondary" style={{ margin: '0 5px' }}>
+                  <Button variant="contained" color="secondary" style={{ margin: '0 5px' }} onClick={updateUser}>
                     Update Profile
                   </Button>
                 </Grid>
@@ -251,6 +260,7 @@ SettingsModal.propTypes = {
   onClick: PropTypes.func,
   user: PropTypes.object.isRequired,
   changeProfileField: PropTypes.func.isRequired,
+  requestApiCall: PropTypes.func.isRequired,
 }
 
 SettingsModal.defaultProps = {
@@ -263,6 +273,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = {
   changeProfileField: modules.state.actions.changeProfileField,
+  requestApiCall: modules.connectivity.actions.requestApiCall,
 }
 
 export default memo(connect(mapStateToProps, mapDispatchToProps)(SettingsModal))

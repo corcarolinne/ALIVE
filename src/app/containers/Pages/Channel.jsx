@@ -10,6 +10,7 @@ import SimplePage from '../../components/SimplePage'
 import MainPlayer from '../../components/MainPlayer'
 
 import modules from '../../modules'
+import api from '../../graphql'
 
 const useStyles = makeStyles((theme) => ({
   gridItem: {
@@ -35,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const Channel = ({ user, unfollow, follow, getChannel, location }) => {
+const Channel = ({ user, requestApiCall, getChannel, location }) => {
   const classes = useStyles()
 
   const channel = getChannel(location.pathname.replace('/channel/', ''))
@@ -44,12 +45,30 @@ const Channel = ({ user, unfollow, follow, getChannel, location }) => {
 
   const handleFollow = (event) => {
     event.preventDefault()
-    follow(channel?.id)
+    if (user?.id) {
+      requestApiCall(
+        api.callNames.followUser,
+        {
+          userId: user?.id,
+          userToFollow: channel?.id,
+        },
+        modules.state.actions.FOLLOW_CHANNEL
+      )
+    }
   }
 
   const handleUnfollow = (event) => {
     event.preventDefault()
-    unfollow(channel?.id)
+    if (user?.id) {
+      requestApiCall(
+        api.callNames.unfollowUser,
+        {
+          userId: user.id,
+          userToUnfollow: channel?.id,
+        },
+        modules.state.actions.UNFOLLOW_CHANNEL
+      )
+    }
   }
 
   return (
@@ -110,9 +129,8 @@ const Channel = ({ user, unfollow, follow, getChannel, location }) => {
 Channel.propTypes = {
   user: PropTypes.object.isRequired,
   getChannel: PropTypes.func.isRequired,
-  unfollow: PropTypes.func.isRequired,
-  follow: PropTypes.func.isRequired,
   location: PropTypes.object.isRequired,
+  requestApiCall: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = createStructuredSelector({
@@ -122,8 +140,7 @@ const mapStateToProps = createStructuredSelector({
 })
 
 const mapDispatchToProps = {
-  unfollow: modules.state.actions.unfollowChannel,
-  follow: modules.state.actions.followChannel,
+  requestApiCall: modules.connectivity.actions.requestApiCall,
 }
 
 export default memo(connect(mapStateToProps, mapDispatchToProps)(Channel))

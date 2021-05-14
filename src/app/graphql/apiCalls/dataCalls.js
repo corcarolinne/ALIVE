@@ -1,5 +1,3 @@
-// import data from './data'
-
 export function getData() {
   return fetch('https://immense-castle-69184.herokuapp.com/users')
     .then((response) => response.json())
@@ -25,4 +23,32 @@ export function getData() {
       }))
       return a
     })
+}
+
+export function followUser({ userId, userToFollow }) {
+  return fetch(`https://immense-castle-69184.herokuapp.com/follow/${userId}/${userToFollow}`, {
+    method: 'post',
+    // body: JSON.stringify(opts)
+  })
+}
+
+export function unfollowUser({ userId, userToUnfollow }) {
+  return fetch(`https://immense-castle-69184.herokuapp.com/unfollow/${userId}/${userToUnfollow}`, {
+    method: 'post',
+    // body: JSON.stringify(opts)
+  })
+}
+
+export function createUser({ registerValues }) {
+  return fetch('https://immense-castle-69184.herokuapp.com/create-user', {
+    method: 'post',
+    body: JSON.stringify(registerValues),
+  })
+}
+
+export function updateUser({ user }) {
+  return fetch(`https://immense-castle-69184.herokuapp.com/update-user/${user.id}`, {
+    method: 'post',
+    body: JSON.stringify(user),
+  })
 }

@@ -2,7 +2,7 @@ import React, { memo, useState } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
-import { Button, TextField, makeStyles, Typography } from '@material-ui/core'
+import { Button, TextField, makeStyles } from '@material-ui/core'
 import AliveLogoDark from '../../assets/icons/AliveLogoDark'
 
 import modules from '../modules'
@@ -73,10 +73,6 @@ const LoginModal = ({ loginValues, changeLoginField, login }) => {
           />
           <Button className={classes.signInButton} variant="contained" color="secondary" onClick={login}>
             Sign In
-          </Button>
-          <Typography className={classes.forgotPasswordLink}>Forgot Password?</Typography>
-          <Button className={classes.createAccountButton} variant="contained">
-            Create an Account
           </Button>
         </form>
       </AliveModal>
