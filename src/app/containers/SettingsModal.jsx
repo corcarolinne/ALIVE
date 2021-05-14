@@ -189,6 +189,32 @@ const SettingsModal = ({ onClick, user, changeProfileField }) => {
               <Grid item>
                 <TextField
                   className={classes.multilineField}
+                  color="secondary"
+                  id="streamrmrpLink"
+                  label="RmtpLink"
+                  type="text"
+                  variant="filled"
+                  fullWidth
+                  disabled
+                  value={user?.obs_config.rmrpLink}
+                />
+              </Grid>
+              <Grid item>
+                <TextField
+                  className={classes.multilineField}
+                  color="secondary"
+                  id="streamkey"
+                  label="StreamKey"
+                  type="text"
+                  variant="filled"
+                  fullWidth
+                  disabled
+                  value={user?.obs_config.streamKey}
+                />
+              </Grid>
+              <Grid item>
+                <TextField
+                  className={classes.multilineField}
                   id="filled-multiline-static"
                   label="Bio"
                   multiline
